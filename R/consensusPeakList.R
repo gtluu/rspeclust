@@ -4,7 +4,7 @@
 #' lists.
 #' 
 #' @param peakLists \code{list} of single column \code{dataframes} with the
-#' column name 'peaks'.
+#' column name 'mz'.
 #' @param tol \code{double} value to be used for m/z tolerance when merging
 #' peak lists.
 #' @param cutoff \code{numeric} value; peaks that appear in \code{n} peak lists
@@ -14,9 +14,9 @@
 #' peak lists it appears in.
 #' @example 
 #' 
-#' peakList1 <- data.frame('peaks'=c(615.3456, 489.6651, 375.1968))
-#' peakList2 <- data.frame('peaks'=c(615.3589, 453.3596, 357.9618))
-#' peakList3 <- data.frame('peaks'=c(615.3358, 861.3456, 198.3557))
+#' peakList1 <- data.frame('mz'=c(615.3456, 489.6651, 375.1968))
+#' peakList2 <- data.frame('mz'=c(615.3589, 453.3596, 357.9618))
+#' peakList3 <- data.frame('mz'=c(615.3358, 861.3456, 198.3557))
 #' 
 #' peakLists <- list(peakList1, peakList2, peakList3)
 #' 

@@ -4,7 +4,7 @@
 #' algorithms.
 #' 
 #' @param peakLists \code{list} of single column \code{dataframes} with the
-#' column name 'peaks'.
+#' column name 'mz'.
 #' @param sigma \code{double} value to be used for m/z tolerance when merging
 #' peak lists.
 #' @param pairwiseCutoff \code{double} value between 0 and 1; peaks with scores
@@ -18,9 +18,9 @@
 #' peak lists it appears in.
 #' @example 
 #' 
-#' peakList1 <- data.frame('peaks'=c(615.3456, 489.6651, 375.1968))
-#' peakList2 <- data.frame('peaks'=c(615.3589, 453.3596, 357.9618))
-#' peakList3 <- data.frame('peaks'=c(615.3358, 861.3456, 198.3557))
+#' peakList1 <- data.frame('mz'=c(615.3456, 489.6651, 375.1968))
+#' peakList2 <- data.frame('mz'=c(615.3589, 453.3596, 357.9618))
+#' peakList3 <- data.frame('mz'=c(615.3358, 861.3456, 198.3557))
 #' 
 #' peakLists <- list(peakList1, peakList2, peakList3)
 #' 
@@ -30,8 +30,8 @@
 peaksInCommon <- function(peakLists, sigma, pairwiseCutoff, multipleCutoff,
                           consensusCutoff) {
   # Get all possible combinations of peak lists.
-  peakListCombos <- combinations(n=length(peakLists), r=2,
-                                 v=seq(1, length(peakLists)))
+  peakListCombos <- gtools::combinations(n=length(peakLists), r=2,
+                                         v=seq(1, length(peakLists)))
   
   # Get dataframes with pairwise similarity scores for each combination of peak
   # lists.
@@ -50,7 +50,8 @@ peaksInCommon <- function(peakLists, sigma, pairwiseCutoff, multipleCutoff,
                                          cutoff=multipleCutoff)
   
   # Get dataframe with consensus peak list.
-  consensusResults <- consensus(peakLists, tol=sigma, cutoff=consensusCutoff)
+  consensusResults <- consensusPeakList(peakLists, tol=sigma,
+                                        cutoff=consensusCutoff)
   
   return(list('pairwise'=pairwiseResults,
               'multiple'=multipleResults,

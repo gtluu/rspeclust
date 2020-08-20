@@ -4,7 +4,7 @@
 #' score.
 #' 
 #' @param peakLists \code{list} of single column \code{dataframes} with the
-#' column name 'peaks'.
+#' column name 'mz'.
 #' @param tol \code{double} value to be used for m/z tolerance when merging
 #' peak lists.
 #' @param cutoff \code{double} value between 0 and 1; peaks with scores
@@ -14,9 +14,9 @@
 #' scores
 #' @example 
 #' 
-#' peakList1 <- data.frame('peaks'=c(615.3456, 489.6651, 375.1968))
-#' peakList2 <- data.frame('peaks'=c(615.3589, 453.3596, 357.9618))
-#' peakList3 <- data.frame('peaks'=c(615.3358, 861.3456, 198.3557))
+#' peakList1 <- data.frame('mz'=c(615.3456, 489.6651, 375.1968))
+#' peakList2 <- data.frame('mz'=c(615.3589, 453.3596, 357.9618))
+#' peakList3 <- data.frame('mz'=c(615.3358, 861.3456, 198.3557))
 #' 
 #' peakLists <- list(peakList1, peakList2, peakList3)
 #' 
@@ -33,7 +33,7 @@ multipleCommonPeaks <- function(peakLists, tol, cutoff) {
     scoresDf <- data.frame(matrix(NA, nrow=nrow(bigDf), ncol=0))
     for (j in 1:ncol(bigDf)) {
       if (i != j) {
-        scoresDf[, as.character(j)] <- 1 - erf(abs(bigDf[, i] - bigDf[, j]) / (2 * tol))
+        scoresDf[, as.character(j)] <- 1 - VGAM::erf(abs(bigDf[, i] - bigDf[, j]) / (2 * tol))
         scoresDf[is.na(scoresDf)] <- 0
         scoresDf$average <- rowMeans(scoresDf)
       }
